@@ -6,16 +6,18 @@ $.ajax({
         var mesi = {}
         var venditori = {}
         for (var i = 0; i < data.length; i++) {
+
             var mese = moment(data[i].date, 'DD/MM/YYYY').format('MMMM')
             var vendite = data[i].amount;
             var venditore = data[i].salesman;
+
             if(!mesi.hasOwnProperty(mese)) {
                 mesi[mese] = vendite;
             } else {
                 mesi[mese] += vendite;
            }
 
-            if(!mesi.hasOwnProperty(venditore)) {
+            if(!venditori.hasOwnProperty(venditore)) {
                 venditori[venditore] = vendite;
             } else {
                 venditori[venditore] += vendite;
@@ -30,7 +32,6 @@ $.ajax({
         var valori_2 = Object.values(venditori);
 
         var ctx = $('#myChart');
-
         var myChart = new Chart(ctx, {
             type: 'line',
             data: {
@@ -69,9 +70,8 @@ $.ajax({
         });
 
         var ctx_2 = $('#myChart-Doughnut');
-
         var myChart_2 = new Chart(ctx_2, {
-            type: 'pie',
+            type: 'doughnut',
             data: {
                 labels: nomi,
                 datasets: [{
