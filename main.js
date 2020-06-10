@@ -4,12 +4,12 @@ var ctx = $('#myChart');
 
 var ctx = document.getElementById('myChart');
 var myChart = new Chart(ctx, {
-    type: 'bar',
+    type: 'line',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre' ],
         datasets: [{
             label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            data: [12, 19, 3, 5, 2, 3, 4, 8, 7, 10, 11, 16],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -39,6 +39,45 @@ var myChart = new Chart(ctx, {
         }
     }
 });
+
+
+
+
+
+
+$.ajax({
+    url : "http://157.230.17.132:4001/sales",
+    method : 'GET',
+    success : function(data) {
+        for (var i = 0; i < data.length; i++) {
+            var mese = moment(data[i].date, 'DD/MM/YYYY').format('MM')
+            console.log(mese);
+        }
+
+    },
+    error : function () {
+    alert("errore.");
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 })
