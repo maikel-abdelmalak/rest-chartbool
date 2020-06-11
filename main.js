@@ -41,19 +41,21 @@ $.ajax({
         var etichette = Object.keys(mesi);
         var valori_mesi = Object.values(mesi);
 
+        var nomi = Object.keys(venditori);
+        var valori_venditori = Object.values(venditori);
+
 //rivedere
         for (var nome_venditore in venditori) {
            var importo_venditore = venditori[nome_venditore];
            var percentuale_venditore = (importo_venditore * 100 / vendite_totali).toFixed(1);
           venditori[nome_venditore] = percentuale_venditore;
         }
+//fine rivedere
+         var select_1 = $('.nomi');
+         popola_select(nomi, select_1);
 
-         var nomi = Object.keys(venditori);
-         var valori_venditori = Object.values(venditori);
-         var select_1 = $('.nomi')
-         popola_select(nomi, select_1)
-         var select_2 = $('.mesi')
-         popola_select(etichette, select_2)
+         var select_2 = $('.mesi');
+         popola_select(etichette, select_2);
 
          crea_line(etichette, valori_mesi);
 
@@ -64,6 +66,48 @@ $.ajax({
     alert("errore.");
     }
 });
+
+$('button').click(function(){
+
+    var dati = {
+        nome : $('.nomi option:selected').text(),
+        mese :$('.mesi option:selected').text(),
+        valore_vendita : parseInt($('input').val())
+    }
+
+    var nome = $('.nomi option:selected').text();
+    var mese = $('.mesi option:selected').text();
+    var valore_vendita = parseInt($('input').val());
+
+    if(nome != '-Scegli venditore-' && mese != '-Scegli mese vendita-' && !isNaN(valore_vendita)){
+        $.ajax({
+            url : "http://157.230.17.132:4001/sales",
+            method : 'POST',
+            data: dati,
+            success : function(dati) {
+
+                window.mychar.update()
+                window.mychar_2.update()
+
+
+            },
+            error : function () {
+            alert("errore.");
+            }
+        });
+
+    }else{
+        alert('hai inserito valori non validi')
+    }
+
+console.log(dati);
+
+
+
+
+
+
+})
 
 
 function crea_line(label, data){
