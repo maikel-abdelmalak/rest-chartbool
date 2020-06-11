@@ -53,6 +53,7 @@ function chiamata_get(){
                 December: 0,
             };
             var venditori = {};
+            console.log(venditori);
             var vendite_totali = 0;
             for (var i = 0; i < data.length; i++) {
                 var mese_corrente = moment(data[i].date, 'DD/MM/YYYY').format('MMMM')
@@ -72,11 +73,6 @@ function chiamata_get(){
 
             }
 
-            var etichette = Object.keys(mesi);
-            var valori_mesi = Object.values(mesi);
-
-            var nomi = Object.keys(venditori);
-            var valori_venditori = Object.values(venditori);
 
     //rivedere
             for (var nome_venditore in venditori) {
@@ -85,6 +81,12 @@ function chiamata_get(){
               venditori[nome_venditore] = percentuale_venditore;
             }
     //fine rivedere
+
+            var etichette = Object.keys(mesi);
+            var valori_mesi = Object.values(mesi);
+
+            var nomi = Object.keys(venditori);
+            var valori_venditori = Object.values(venditori);
              var select_1 = $('.nomi');
              popola_select(nomi, select_1);
 

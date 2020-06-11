@@ -1,12 +1,22 @@
 .container{
-    width: 800px;
+    width: calc(50% - 60px);
+    padding: 50px 30px;
+    float: left;
     margin: auto;
-    padding: 60px 0;
 }
 
-h1{
+h1, h2{
     text-align: center;
     font-family: sans-serif;
     color: blue;
     font-weight: bold;
+}
+
+.aggiungi{
+    display: flex;
+    justify-content: center;
+}
+
+select, input, button{
+    margin: 0 15px;
 }
