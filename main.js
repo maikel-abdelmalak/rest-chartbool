@@ -16,10 +16,11 @@ $.ajax({
             October: 0,
             November: 0,
             December: 0,
-        }
-        var venditori = {}
+        };
+        var venditori = {};
+        var vendite_totali = 0;
         for (var i = 0; i < data.length; i++) {
-
+            vendite_totali += data[i].amount;
             var mese_corrente = moment(data[i].date, 'DD/MM/YYYY').format('MMMM')
             var vendita_corrente = data[i].amount;
             var venditore_corrente = data[i].salesman;
@@ -35,15 +36,28 @@ $.ajax({
 
         }
 
+        console.log(venditori);
+
         var etichette = Object.keys(mesi);
         var valori_mesi = Object.values(mesi);
 
-        var nomi = Object.keys(venditori);
-        var valori_venditori = Object.values(venditori);
+//rivedere
+        for (var nome_venditore in venditori) {
+           var importo_venditore = venditori[nome_venditore];
+           var percentuale_venditore = (importo_venditore * 100 / vendite_totali).toFixed(1);
+          venditori[nome_venditore] = percentuale_venditore;
+        }
 
-        crea_line(etichette, valori_mesi)
+         var nomi = Object.keys(venditori);
+         var valori_venditori = Object.values(venditori);
+         var select_1 = $('.nomi')
+         popola_select(nomi, select_1)
+         var select_2 = $('.mesi')
+         popola_select(etichette, select_2)
 
-        crea_doughnut(nomi, valori_venditori)
+         crea_line(etichette, valori_mesi);
+
+        crea_doughnut(nomi, valori_venditori);
 
     },
     error : function () {
@@ -116,7 +130,15 @@ function crea_doughnut(label, data){
     });
 }
 
-
+function popola_select(object, select){
+    for (var proprieta in object) {
+        var source   = $('#option-template').html();
+        var template = Handlebars.compile(source);
+        var context = {valore: object[proprieta]};
+        var html = template(context);
+        select.append(html)
+    }
+}
 
 
 
